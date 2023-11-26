@@ -1,0 +1,22 @@
+all:
+  hosts:
+    node1:
+      ansible_host: 3.238.41.66
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./projectkey
+    node2:
+      ansible_host: 54.147.115.43
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./projectkey
+    node3:
+      ansible_host: 44.211.60.51
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./projectkey
+    node4:
+      ansible_host: 44.215.126.68
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./projectkey
+    node5:
+      ansible_host: 44.198.58.55
+      ansible_user: ubuntu
+      ansible_ssh_private_key_file: ./projectkey
