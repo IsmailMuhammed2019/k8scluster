@@ -5,12 +5,12 @@ variable "REGION" {
 variable "AMIS" {
   type = map(any)
   default = {
-    ami = "0fc5d935ebf8bc3bc"
+    us-east-1 = "ami-06aa3f7caf3a30282"
   }
 }
 
 variable "USER" {
-  default = "ec2-user"
+  default = "ubuntu"
 }
 
 variable "ZONE1" {
@@ -26,5 +26,5 @@ variable "ZONE3" {
 }
 
 variable "MYIP" {
-  default = "0.0.0.0/32"
+  default = "102.89.32.41/32"
 }
