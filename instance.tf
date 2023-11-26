@@ -3,8 +3,8 @@ resource "aws_key_pair" "projectkey" {
   public_key = file("projectkey.pub")
 }
 
-resource "aws_instance" "webtemplate" {
-  count = 5
+resource "aws_instance" "servers" {
+  count                  = 5
   ami                    = var.AMIS[var.REGION]
   instance_type          = "t2.micro"
   subnet_id              = aws_subnet.treten-pub-1.id
@@ -16,12 +16,13 @@ resource "aws_instance" "webtemplate" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt update",
-      "sudo apt upgrade",
+      "sudo apt update -y",
+      "sudo apt upgrade -y",
     ]
   }
 
   connection {
+    type = "ssh"
     user        = var.USER
     private_key = file("projectkey")
     host        = self.public_ip
@@ -29,15 +30,18 @@ resource "aws_instance" "webtemplate" {
 }
 
 resource "null_resource" "save_output" {
-  depends_on = [aws_instance.webtemplate]
+  count = length(aws_instance.servers)
+
+  triggers = {
+    instance_id = aws_instance.servers[count.index].id
+  }
 
   provisioner "local-exec" {
-    command = <<-EOT
-        echo '${aws_instance.webtemplate.public_ip}' >> output.txt
-      EOT
+    command = "echo '${aws_instance.servers[count.index].public_ip}' >> output.txt"
   }
 }
 
+
 output "PublicIP" {
-  value = aws_instance.webtemplate.public_ip
+  value = [for instance in aws_instance.servers : instance.public_ip]
 }
