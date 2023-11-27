@@ -2,3 +2,5 @@
 projectkey
 projectkey.pub
 *.hcl
+group_vars
+patches
